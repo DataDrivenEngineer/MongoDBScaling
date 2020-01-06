@@ -1,0 +1,33 @@
+version: "3.2"
+
+services:
+  mongo1:
+    image: mongo
+    container_name: mongo-primary
+    expose:
+     - "27017"
+    ports:
+     - "27017:27017"
+    restart: always
+    command: [ "--bind_ip_all", "--replSet", "rs0" ]
+  mongo2:
+    image: mongo
+    container_name: mongo-secondary1
+    expose:
+     - "27018"
+    ports:
+     - "27018:27018"
+    restart: always
+    command: [ "--bind_ip_all", "--replSet", "rs0", "--port", "27018" ]
+  mongo3:
+    image: mongo
+    container_name: mongo-secondary2
+    expose:
+     - "27019"
+    ports:
+     - "27019:27019"
+    restart: always
+    command: [ "--bind_ip_all", "--replSet", "rs0", "--port", "27019" ]
+
+
+

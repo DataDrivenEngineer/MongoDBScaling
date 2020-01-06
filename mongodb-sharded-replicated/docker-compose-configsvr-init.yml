@@ -1,0 +1,38 @@
+version: "3.2"
+
+services:
+  mongo-configsvr1:
+    image: mongo
+    container_name: mongo-configsvr1
+    expose:
+     - "27020"
+    ports:
+     - "27020:27020"
+    restart: always
+    command: [ "mongod", "--configsvr", "--bind_ip_all", "--replSet", "config-rs", "--port", "27020" ]
+    volumes:
+     - /var/tmp/mongodb/config-srv-0:/data/db
+  mongo-configsvr2:
+    image: mongo
+    container_name: mongo-configsvr2
+    expose:
+     - "27021"
+    ports:
+     - "27021:27021"
+    restart: always
+    command: [ "mongod", "--configsvr", "--bind_ip_all", "--replSet", "config-rs", "--port", "27021" ]
+    volumes:
+     - /var/tmp/mongodb/config-srv-1:/data/db
+  mongo-configsvr3:
+    image: mongo
+    container_name: mongo-configsvr3
+    expose:
+     - "27022"
+    ports:
+     - "27022:27022"
+    restart: always
+    command: [ "mongod", "--configsvr", "--bind_ip_all", "--replSet", "config-rs", "--port", "27022" ]
+    volumes:
+     - /var/tmp/mongodb/config-srv-2:/data/db
+
+

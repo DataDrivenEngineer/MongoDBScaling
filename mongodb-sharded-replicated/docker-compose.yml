@@ -1,0 +1,42 @@
+version: "3.2"
+
+services:
+  mongo-shardsvr1:
+    image: mongo
+    container_name: mongo-shardsvr1
+    expose:
+     - "27017"
+    ports:
+     - "27017:27017"
+    restart: always
+    command: [ "mongod", "--shardsvr", "--port", "27017", "--bind_ip_all", "--oplogSize", "128" ]
+    volumes:
+     - /var/tmp/mongodb/shard-0:/data/db
+  mongo-shardsvr2:
+    image: mongo
+    container_name: mongo-shardsvr2
+    expose:
+     - "27018"
+    ports:
+     - "27018:27018"
+    restart: always
+    command: [ "mongod", "--shardsvr", "--port", "27018", "--bind_ip_all", "--oplogSize", "128" ]
+    volumes:
+     - /var/tmp/mongodb/shard-1:/data/db
+
+
+  mongo-router:
+    image: mongo
+    container_name: mongo-router
+    expose:
+     - "27023"
+    ports:
+     - "27023:27023"
+    restart: always
+    command: [ "mongos", "--configdb", "config-rs/mongo-configsvr1:27020,mongo-configsvr2:27021,mongo-configsvr3:27022", "--bind_ip_all", "--port", "27023" ]
+    depends_on:
+     - mongo-shardsvr1
+     - mongo-shardsvr2
+
+
+
