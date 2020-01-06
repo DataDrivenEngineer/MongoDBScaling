@@ -1,5 +1,5 @@
 # MongoDBScaling
-Building blocks for replication/sharding of MongoDB to be used in distributed systems development + Java client
+Building blocks for replication/sharding of MongoDB to be used in distributed systems development + MongoDB Java client
 
 Project includes:
 - `mongodb-replicated/mongo-cluster-initialization.sh` - bash script to initialize Docker-based MongoDB cluster with replication factor = 3
